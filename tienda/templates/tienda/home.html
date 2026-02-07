@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'tienda/css/home.css' %}">
     <title>Multi-Tienda | Inicio</title>
 </head>
+
 <body>
 
     <div class="container">
@@ -23,8 +25,13 @@
             <div class="col-md-5 col-lg-4">
                 <div class="card card-emprendedor shadow-sm p-4 text-center">
                     <div class="card-body">
-                        <div class="mb-3">
+                        <div class="mb-3 d-flex justify-content-center align-items-center" style="height: 120px;">
+                            {% if e.logo %}
+                            <img src="{{ e.logo.url }}" alt="{{ e.nombre_tienda }}"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            {% else %}
                             <span class="display-1 text-primary opacity-25">{{ e.nombre_tienda|slice:":1" }}</span>
+                            {% endif %}
                         </div>
                         <h2 class="h3 mb-2">{{ e.nombre_tienda }}</h2>
                         <span class="badge badge-rubro mb-4">{{ e.rubro }}</span>
@@ -46,4 +53,5 @@
     </div>
 
 </body>
+
 </html>

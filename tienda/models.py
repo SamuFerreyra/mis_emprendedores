@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Emprendedor(models.Model):
     # Vinculamos al emprendedor con un usuario del sistema
+    logo = models.ImageField(upload_to='logos/', null=True, blank=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre_tienda = models.CharField(max_length=100)
     rubro = models.CharField(max_length=100, help_text="Ej: Productos Capilares o Zapatillas")
