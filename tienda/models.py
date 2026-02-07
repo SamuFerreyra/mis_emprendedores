@@ -7,6 +7,9 @@ class Emprendedor(models.Model):
     nombre_tienda = models.CharField(max_length=100)
     rubro = models.CharField(max_length=100, help_text="Ej: Productos Capilares o Zapatillas")
     slug = models.SlugField(unique=True, help_text="Ej: capilares o zapatillas")
+    class Meta:
+        verbose_name = "Emprendedor"
+        verbose_name_plural = "Emprendedores"
 
     def __str__(self):
         return self.nombre_tienda
