@@ -1,0 +1,34 @@
+/* Colores suaves para belleza */
+body {
+    background-color: #fef1f6; /* Rosa muy pálido */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    color: #d63384; /* Rosa fuerte */
+    font-weight: 300;
+}
+
+.navbar {
+    background-color: #d63384 !important;
+}
+
+.card {
+    border: none;
+    border-radius: 25px; /* Súper redondeado */
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn-primary {
+    background-color: #ff85a2;
+    border: none;
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #d63384;
+}

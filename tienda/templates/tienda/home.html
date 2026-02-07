@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'tienda/css/home.css' %}">
+    <title>Multi-Tienda | Inicio</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="welcome-title display-3">Multi-Tienda</h1>
+                <p class="lead text-muted mb-5">Elegí la tienda que querés visitar</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center g-4">
+            {% for e in emprendedores %}
+            <div class="col-md-5 col-lg-4">
+                <div class="card card-emprendedor shadow-sm p-4 text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <span class="display-1 text-primary opacity-25">{{ e.nombre_tienda|slice:":1" }}</span>
+                        </div>
+                        <h2 class="h3 mb-2">{{ e.nombre_tienda }}</h2>
+                        <span class="badge badge-rubro mb-4">{{ e.rubro }}</span>
+                        <br>
+                        <a href="{% url 'ver_productos' e.id %}" class="btn btn-primary btn-tienda shadow">
+                            Entrar a la tienda
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-md-6">
+                <div class="alert alert-info text-center">
+                    Todavía no hay emprendedores registrados.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
