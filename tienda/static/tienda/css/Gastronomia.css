@@ -1,5 +1,49 @@
+/* Estilo para local de comida */
 body {
+    background-color: #fcf8f2; /* Un crema suave de fondo */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    background-color: rgb(233, 139, 17);
+/* Título del local */
+h1.display-4 {
+    color: #d32f2f; /* Rojo gastronómico */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
 
+/* Tarjetas de productos */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.02); /* Efecto de zoom al pasar el mouse */
+}
+
+/* Precios */
+.text-success {
+    color: #2e7d32 !important;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* Botón de WhatsApp - Color "Delivery" */
+.btn-success {
+    background-color: #ff9800; /* Naranja llamativo */
+    border: none;
+    border-radius: 50px;
+    padding: 10px;
+}
+
+.btn-success:hover {
+    background-color: #e68a00;
+}
+
+/* Badge de stock */
+.text-primary {
+    color: #795548 !important; /* Marrón tipo madera para detalles */
 }
