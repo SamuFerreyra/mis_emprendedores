@@ -3,5 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('emprendedor/<int:emprendedor_id>/', views.ver_productos, name='ver_productos'),
+    path('emprendedor/<int:pk>/', views.productos_emprendedor, name='productos_emprendedor'),
+    # AGREGA ESTA LÍNEA:
+    path('producto/<int:pk>/', views.detalle_producto, name='detalle_producto'),
 ]

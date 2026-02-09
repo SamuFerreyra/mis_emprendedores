@@ -15,3 +15,27 @@ def ver_productos(request, emprendedor_id):
         'emprendedor': emprendedor,
         'productos': productos
     })
+
+
+def detalle_producto(request, pk):
+    # Buscamos el producto por su ID (pk)
+    producto = get_object_or_404(Producto, pk=pk)
+    
+    # Sugerencias: buscamos productos del mismo vendedor pero que no sean el actual
+    sugerencias = Producto.objects.filter(vendedor=producto.vendedor).exclude(pk=pk)[:4]
+    
+    return render(request, 'tienda/detalle_producto.html', {
+        'producto': producto,
+        'sugerencias': sugerencias
+    })
+
+
+ 
+# Asegúrate de que el nombre sea exactamente este:
+def productos_emprendedor(request, pk):
+    emprendedor = get_object_or_404(Emprendedor, pk=pk)
+    productos = Producto.objects.filter(vendedor=emprendedor)
+    return render(request, 'tienda/productos.html', {
+        'emprendedor': emprendedor,
+        'productos': productos
+    })

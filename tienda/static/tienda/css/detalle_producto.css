@@ -1,0 +1,37 @@
+/* Estructura de la imagen principal */
+.main-img { 
+    height: 450px; 
+    width: 100%;
+    object-fit: cover; 
+    border-radius: 20px; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.main-img:hover {
+    transform: scale(1.02);
+}
+
+/* Miniaturas (Thumbs) */
+.thumb { 
+    height: 70px; 
+    width: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer; 
+    opacity: 0.6; 
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+.thumb:hover, .thumb.active { 
+    opacity: 1; 
+    border-color: #000; /* Aquí podrías usar una variable si quieres */
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+    .main-img {
+        height: 300px;
+    }
+}
