@@ -22,7 +22,7 @@
             <div class="col-md-6 text-center">
                 {% if producto.imagen %}
                 <img src="{{ producto.imagen.url }}" id="grande" class="img-fluid main-img w-100"
-                    style="transition: opacity 0.3s ease; height: 400px; object-fit: cover; border-radius: 15px;">
+                    style="transition: opacity 0.3s ease; height: 400px; object-fit: contain; border-radius: 15px; background-color: #f8f9fa;">
                 {% endif %}
 
                 <div class="mt-3 d-flex justify-content-center align-items-center gap-2">
@@ -54,6 +54,7 @@
 
                 <a href="https://wa.me/{{ producto.vendedor.telefono }}?text=Hola%20{{ producto.vendedor.nombre_tienda }}!%20Me%20interesa%20el%20producto:%20{{ producto.nombre }}" 
                 target="_blank" 
+                style="border-radius: 20px "
                 class="btn btn-success w-100 mt-3 py-3 shadow fw-bold">
                 Consultar por WhatsApp ahora
                 </a>
