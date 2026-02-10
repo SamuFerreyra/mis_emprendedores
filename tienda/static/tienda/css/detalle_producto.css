@@ -12,6 +12,14 @@
     transform: scale(1.02);
 }
 
+
+
+/* Esto obliga a que cualquier párrafo dentro de la descripción sea negro */
+.descripcion-contenedor p {
+    color: #212529 !important;
+    margin-bottom: 1rem; /* Para que los puntos y aparte tengan buen espacio */
+}
+
 /* Miniaturas (Thumbs) */
 .thumb { 
     height: 70px; 

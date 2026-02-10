@@ -22,7 +22,7 @@
             <div class="col-md-6 text-center">
                 {% if producto.imagen %}
                 <img src="{{ producto.imagen.url }}" id="grande" class="img-fluid main-img w-100"
-                    style="transition: opacity 0.3s ease; height: 400px; object-fit: contain; border-radius: 15px; background-color: #f8f9fa;">
+                    style="transition: opacity 0.3s ease; height: 400px; object-fit: contain; border-radius: 15px; background-color: #d5d4d4;">
                 {% endif %}
 
                 <div class="mt-3 d-flex justify-content-center align-items-center gap-2">
@@ -48,15 +48,30 @@
                 <h1 class="display-5">{{ producto.nombre }}</h1>
                 <p class="text-muted">Publicado por: {{ producto.vendedor.nombre_tienda }}</p>
                 <hr>
-                <h2 class="text-success">${{ producto.precio }}</h2>
-                <p class="mt-4">{{ producto.descripcion }}</p>
-                <p class="badge bg-primary">Stock disponible: {{ producto.stock }}</p>
+                
+                {% if not es_servicio %}
+                    <h2 class="text-success">${{ producto.precio }}</h2>
+                {% else %}
+                    <h2 class="text-info">Servicio Profesional</h2>
+                {% endif %}
 
-                <a href="https://wa.me/{{ producto.vendedor.telefono }}?text=Hola%20{{ producto.vendedor.nombre_tienda }}!%20Me%20interesa%20el%20producto:%20{{ producto.nombre }}" 
+                <div class="mt-4" style="color: #212529 !important;">
+                    {{ producto.descripcion|linebreaks }}
+                </div>
+
+                {% if not es_servicio %}
+                    <p class="badge bg-primary">Stock disponible: {{ producto.stock }}</p>
+                {% endif %}
+
+                <a href="https://wa.me/{{ producto.vendedor.telefono }}?text=Hola%20{{ producto.vendedor.nombre_tienda }}!%20Me%20interesa%20{% if es_servicio %}un presupuesto por el servicio{% else %}el producto{% endif %}:%20{{ producto.nombre }}" 
                 target="_blank" 
                 style="border-radius: 20px "
                 class="btn btn-success w-100 mt-3 py-3 shadow fw-bold">
-                Consultar por WhatsApp ahora
+                    {% if es_servicio %}
+                        Solicitar Presupuesto ahora
+                    {% else %}
+                        Consultar por WhatsApp ahora
+                    {% endif %}
                 </a>
             </div>
         </div>
@@ -75,42 +90,35 @@
                         </a>
                         <div class="card-body p-2 text-center">
                             <p class="small mb-0">{{ s.nombre }}</p>
-                            <p class="fw-bold text-success">${{ s.precio }}</p>
+                            {% if not es_servicio %}
+                                <p class="fw-bold text-success">${{ s.precio }}</p>
+                            {% else %}
+                                <p class="small text-info">Ver servicio</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
                 {% empty %}
-                <p class="text-muted ms-3">No hay más productos similares.</p>
+                <p class="text-muted ms-3">No hay más similares por ahora.</p>
                 {% endfor %}
             </div>
         </div>
     </div>
 
     <script src="{% static 'tienda/js/galeria.js' %}"></script>
-
     <script>
         const imagenesDesdeDjango = [];
-
-        // Agregamos la imagen principal
         {% if producto.imagen %}
         imagenesDesdeDjango.push("{{ producto.imagen.url }}");
         {% endif %}
-
-        // Agregamos las extras una por una
         {% for extra in producto.imagenes_extras.all %}
         imagenesDesdeDjango.push("{{ extra.imagen.url }}");
         {% endfor %}
-
-        // Verificamos si la función existe antes de llamarla
         if (typeof inicializarGaleria === 'function') {
             inicializarGaleria(imagenesDesdeDjango);
         } else {
             console.error("Error: No se pudo cargar galeria.js. Revisa la ruta en static.");
         }
     </script>
-
-
-
 </body>
-
 </html>

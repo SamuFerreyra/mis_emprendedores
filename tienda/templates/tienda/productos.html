@@ -24,13 +24,37 @@
             <p class="lead text-muted">Rubro: {{ emprendedor.rubro }}</p>
         </div>
 
+        {% if es_servicio %}
+            <!-- ACA ESTAN LOS BOTONES. COMPIAR Y PEGAR PARA AGREGAR MAS -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-10 text-center">
+                <h4 class="mb-3">¿Qué servicio necesitás hoy?</h4>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="?profesion=Aire" class="btn {% if profesion_actual == 'Aire' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                        ❄️ Técnico de Aire
+                    </a>
+                    <a href="?profesion=Albañil" class="btn {% if profesion_actual == 'Albañil' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                        🏗️ Albañilería
+                    </a>
+                    <a href="?profesion=Plomero" class="btn {% if profesion_actual == 'Plomero' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                        🚰 Plomería
+                    </a>
+                    <a href="?profesion=Electricista" class="btn {% if profesion_actual == 'Electricista' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                        ⚡ Electricista
+                    </a>
+                    <a href="?" class="btn btn-link text-decoration-none text-muted">Ver todos</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="row">
             {% for p in productos %}
             <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow-sm border-0">
                     <a href="{% url 'detalle_producto' p.id %}" style="text-decoration: none; color: inherit;">
                         {% if p.imagen %}
-                        <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 200px; object-fit: cover;"
+                        <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;"
                             alt="{{ p.nombre }}">
                         {% else %}
                         <div class="bg-secondary text-white text-center p-5">Sin Imagen</div>
@@ -39,28 +63,39 @@
 
                     <div class="card-body">
                         <a href="{% url 'detalle_producto' p.id %}" style="text-decoration: none; color: inherit;">
-                            <h5 class="card-title">{{ p.nombre }}</h5>
+                            <h5 class="card-title fw-bold">{{ p.nombre }}</h5>
                         </a>
                         <p class="card-text text-secondary">{{ p.descripcion|truncatechars:100 }}</p>
-                        <h4 class="text-success">${{ p.precio }}</h4>
+                        
+                        {% if not es_servicio %}
+                            <h4 class="text-success">${{ p.precio }}</h4>
+                        {% else %}
+                            <span class="badge bg-light text-dark border">{{ p.categoria }}</span>
+                        {% endif %}
                     </div>
 
-                    <div class="card-footer bg-white border-0">
-                        <p class="small {% if p.stock > 0 %}text-primary{% else %}text-danger{% endif %}">
-                             Stock: {{ p.stock }} unidades
-                         </p>
+                    <div class="card-footer bg-white border-0 pb-3">
+                        {% if not es_servicio %}
+                            <p class="small {% if p.stock > 0 %}text-primary{% else %}text-danger{% endif %}">
+                                Stock: {{ p.stock }} unidades
+                            </p>
+                        {% endif %}
     
-                         <a href="https://wa.me/{{ p.vendedor.telefono }}?text=Hola%20{{ p.vendedor.nombre_tienda }}!%20Me%20interesa%20el%20producto:%20{{ p.nombre }}" 
+                        <a href="https://wa.me/{{ p.vendedor.telefono }}?text=Hola%20{{ p.vendedor.nombre_tienda }}!%20Me%20interesa%20{% if es_servicio %}presupuestar el servicio{% else %}el producto{% endif %}:%20{{ p.nombre }}" 
                              target="_blank" 
-                              class="btn btn-success w-100 mt-3 py-3 shadow text-decoration-none d-block text-center fw-bold">
-                              <i class="fab fa-whatsapp"></i> Consultar por WhatsApp ahora
+                             class="btn {% if es_servicio %}btn-success{% else %}btn-primary{% endif %} w-100 mt-2 py-2 shadow-sm text-decoration-none d-block text-center fw-bold">
+                             {% if es_servicio %}
+                                Consultar Presupuesto
+                             {% else %}
+                                Comprar Ahora
+                             {% endif %}
                         </a>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12 text-center">
-                <p class="alert alert-info">Este emprendedor aún no ha cargado productos.</p>
+                <p class="alert alert-info">No se encontraron servicios en esta categoría.</p>
             </div>
             {% endfor %}
         </div>
@@ -69,8 +104,6 @@
     <script>
         function changeImage(productId, direction) {
             const img = document.getElementById(`img-${productId}`);
-            // Aquí podrías tener un array de URLs de imágenes
-            // Por ahora, esto es la base para el movimiento lateral
             img.style.opacity = '0.5';
             setTimeout(() => {
                 img.style.opacity = '1';
@@ -78,7 +111,5 @@
         }
     </script>
 
-
 </body>
-
 </html>

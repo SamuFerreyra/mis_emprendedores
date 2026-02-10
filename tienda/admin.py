@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Emprendedor, Producto, ImagenProducto
+from .models import Servicio
 
 # 1. Configuración para las fotos extras
 class ImagenProductoInline(admin.TabularInline):
@@ -42,3 +43,9 @@ class ProductoAdmin(admin.ModelAdmin):
             except Emprendedor.DoesNotExist:
                 pass 
         super().save_model(request, obj, form, change)
+
+
+
+
+
+admin.site.register(Servicio)

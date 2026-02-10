@@ -40,3 +40,17 @@ class ImagenProducto(models.Model):
 
     def __str__(self):
         return f"Imagen extra de {self.producto.nombre}"
+    
+
+
+
+class Servicio(models.Model):
+    vendedor = models.ForeignKey(Emprendedor, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100) # Ej: Instalación de Aire
+    categoria = models.CharField(max_length=100) # Ej: Refrigeración
+    descripcion = models.TextField()
+    activo = models.BooleanField(default=True) # Para que ellos lo apaguen/prendan
+    imagen = models.ImageField(upload_to='servicios/', null=True, blank=True)
+
+    def __clase__(self):
+        return f"{self.nombre} - {self.categoria}"
