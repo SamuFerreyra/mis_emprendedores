@@ -49,7 +49,7 @@ class ProductoAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register(Servicio)
+
 
 
 
