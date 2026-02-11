@@ -7,7 +7,7 @@ def home(request):
 
 def productos_emprendedor(request, pk):
     emprendedor = get_object_or_404(Emprendedor, pk=pk)
-    es_servicio = (emprendedor.rubro == "Servicios Y Mantenimiento")
+    es_servicio = (emprendedor.rubro == "Servicios Y Mantenimiento", "Manicura")
     
     # AGREGADO: Capturamos la profesión (categoría) de la URL si existe
     profesion_elegida = request.GET.get('profesion')

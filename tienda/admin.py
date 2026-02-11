@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Emprendedor, Producto, ImagenProducto
+from .models import Emprendedor, Producto, ImagenProducto, GaleriaServicio
 from .models import Servicio
+ 
 
 # 1. Configuración para las fotos extras
 class ImagenProductoInline(admin.TabularInline):
@@ -49,3 +50,15 @@ class ProductoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Servicio)
+
+
+
+# Esto permite cargar las fotos dentro de la misma pantalla del Servicio
+class GaleriaServicioInline(admin.TabularInline):
+    model = GaleriaServicio
+    extra = 3 # Te muestra 3 espacios vacíos para subir fotos de una
+
+@admin.register(Servicio)
+class ServicioAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'vendedor', 'categoria', 'ubicacion')
+    inlines = [GaleriaServicioInline] # Agregamos la galería aquí

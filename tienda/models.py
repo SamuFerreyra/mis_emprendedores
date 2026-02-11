@@ -60,3 +60,11 @@ class Servicio(models.Model):
         return self.nombre
     
     
+
+class GaleriaServicio(models.Model):
+    # Esto une la foto con un servicio específico
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='imagenes')
+    imagen = models.ImageField(upload_to='servicios/galeria/')
+
+    def __str__(self):
+        return f"Foto de {self.servicio.nombre}"
