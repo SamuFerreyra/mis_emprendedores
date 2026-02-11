@@ -54,3 +54,8 @@ class Servicio(models.Model):
 
     def __clase__(self):
         return f"{self.nombre} - {self.categoria}"
+    
+    def __str__(self):
+        return self.nombre
+    
+    
