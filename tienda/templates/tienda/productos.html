@@ -71,6 +71,12 @@
                             <h4 class="text-success">${{ p.precio }}</h4>
                         {% else %}
                             <span class="badge bg-light text-dark border">{{ p.categoria }}</span>
+
+                            <div class="mt-2">
+                                    <small class="text-muted">
+        📍                                  <strong>Zona:</strong> {{ p.ubicacion }}
+                                    </small>
+                            </div>
                         {% endif %}
                     </div>
 
