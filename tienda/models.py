@@ -49,6 +49,7 @@ class Servicio(models.Model):
     nombre = models.CharField(max_length=100) # Ej: Instalación de Aire
     categoria = models.CharField(max_length=100) # Ej: Refrigeración
     descripcion = models.TextField()
+    ubicacion = models.CharField(max_length=100, default="Consultar zona", help_text="Ej: Quilmes, Berazategui, etc.")
     activo = models.BooleanField(default=True) # Para que ellos lo apaguen/prendan
     imagen = models.ImageField(upload_to='servicios/', null=True, blank=True)
 

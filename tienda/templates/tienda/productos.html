@@ -65,7 +65,7 @@
                         <a href="{% url 'detalle_producto' p.id %}" style="text-decoration: none; color: inherit;">
                             <h5 class="card-title fw-bold">{{ p.nombre }}</h5>
                         </a>
-                        <p class="card-text text-secondary">{{ p.descripcion|truncatechars:100 }}</p>
+                        <p class="card-text text-secondary">📝 {{ p.descripcion|truncatechars:150 }}</p>
                         
                         {% if not es_servicio %}
                             <h4 class="text-success">${{ p.precio }}</h4>
