@@ -7,24 +7,28 @@ def home(request):
 
 def productos_emprendedor(request, pk):
     emprendedor = get_object_or_404(Emprendedor, pk=pk)
-    es_servicio = (emprendedor.rubro == "Servicios Y Mantenimiento", "Manicura")
     
-    # AGREGADO: Capturamos la profesión (categoría) de la URL si existe
+    rubros_servicios = ["Servicios Y Mantenimiento", "Manicura"]
+    es_servicio = emprendedor.rubro in rubros_servicios
     profesion_elegida = request.GET.get('profesion')
 
     if es_servicio:
         items = Servicio.objects.filter(vendedor=emprendedor)
-        # MODIFICADO: Si el usuario hizo clic en una profesión, filtramos
+        # ESTO ES LO NUEVO: Sacamos las categorías únicas de este emprendedor
+        categorias = items.values_list('categoria', flat=True).distinct()
+        
         if profesion_elegida:
             items = items.filter(categoria__icontains=profesion_elegida)
     else:
         items = Producto.objects.filter(vendedor=emprendedor)
+        categorias = None # Para tiendas de productos no lo usamos por ahora
 
     return render(request, 'tienda/productos.html', {
         'emprendedor': emprendedor,
         'productos': items, 
         'es_servicio': es_servicio,
-        'profesion_actual': profesion_elegida # Enviamos cuál está seleccionada
+        'profesion_actual': profesion_elegida,
+        'categorias': categorias # Pasamos las categorías al HTML
     })
 
 def detalle_producto(request, pk):

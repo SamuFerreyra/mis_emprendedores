@@ -1,12 +1,12 @@
 /* Estilo urbano y deportivo */
 body {
-    background-color: #121212; /* Negro mate */
+    background-color: #e6e2e2; /* Negro mate */
     color: #ffffff;
     font-family: 'Arial Black', sans-serif;
 }
 
 h1 {
-    color: #ff4500; /* Naranja neón/deportivo */
+    color: #0a0909; /* Naranja neón/deportivo */
     text-transform: uppercase;
     letter-spacing: 2px;
 }

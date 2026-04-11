@@ -1,61 +1,53 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'tienda/css/' %}{{ emprendedor.slug }}.css">
+    <link rel="stylesheet" href="{% static 'tienda/css/' %}{{ emprendedor.slug }}.css?v=1.1">
     <title>{{ emprendedor.nombre_tienda }}</title>
 </head>
 
-<body class="bg-light">
-
+<body >
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">⬅ Volver a la Multi-Tienda</a>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="min-height: 70vh;">
         <div class="text-center mb-5">
             <h1 class="display-4">{{ emprendedor.nombre_tienda }}</h1>
             <p class="lead text-muted">Rubro: {{ emprendedor.rubro }}</p>
         </div>
 
         {% if es_servicio %}
-            <!-- ACA ESTAN LOS BOTONES. COMPIAR Y PEGAR PARA AGREGAR MAS -->
         <div class="row justify-content-center mb-5">
             <div class="col-md-10 text-center">
                 <h4 class="mb-3">¿Qué servicio necesitás hoy?</h4>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="?profesion=Aire" class="btn {% if profesion_actual == 'Aire' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
-                        ❄️ Técnico de Aire
+                    <a href="?profesion=" class="btn {% if not profesion_actual %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                        Ver todos
                     </a>
-                    <a href="?profesion=Albañil" class="btn {% if profesion_actual == 'Albañil' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
-                        🏗️ Albañilería
-                    </a>
-                    <a href="?profesion=Plomero" class="btn {% if profesion_actual == 'Plomero' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
-                        🚰 Plomería
-                    </a>
-                    <a href="?profesion=Electricista" class="btn {% if profesion_actual == 'Electricista' %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
-                        ⚡ Electricista
-                    </a>
-                    <a href="?" class="btn btn-link text-decoration-none text-muted">Ver todos</a>
+                    {% for cat in categorias %}
+                        <a href="?profesion={{ cat }}" 
+                           class="btn {% if profesion_actual == cat %}btn-primary{% else %}btn-outline-dark{% endif %} px-4 shadow-sm">
+                            {{ cat|capfirst }}
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
         {% endif %}
 
-        <div class="row">
+        <div class="row {% if productos.count == 1 %}justify-content-center{% endif %}">
             {% for p in productos %}
-            <div class="col-12 col-sm-6 col-lg-4 mb-4">
+            <div class="{% if productos.count == 1 %}col-md-6 col-lg-5{% else %}col-12 col-sm-6 col-lg-4{% endif %} mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <a href="{% url 'detalle_producto' p.id %}" style="text-decoration: none; color: inherit;">
                         {% if p.imagen %}
-                        <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;"
-                            alt="{{ p.nombre }}">
+                        <img src="{{ p.imagen.url }}" class="card-img-top" style="height: 250px; object-fit: cover; border-radius: 10px 10px 0 0;" alt="{{ p.nombre }}">
                         {% else %}
                         <div class="bg-secondary text-white text-center p-5">Sin Imagen</div>
                         {% endif %}
@@ -71,30 +63,17 @@
                             <h4 class="text-success">${{ p.precio }}</h4>
                         {% else %}
                             <span class="badge bg-light text-dark border">{{ p.categoria }}</span>
-
                             <div class="mt-2">
-                                    <small class="text-muted">
-        📍                                  <strong>Zona:</strong> {{ p.ubicacion }}
-                                    </small>
+                                <small class="text-muted">📍 <strong>Zona:</strong> {{ p.ubicacion }}</small>
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="card-footer bg-white border-0 pb-3">
-                        {% if not es_servicio %}
-                            <p class="small {% if p.stock > 0 %}text-primary{% else %}text-danger{% endif %}">
-                                Stock: {{ p.stock }} unidades
-                            </p>
-                        {% endif %}
-    
                         <a href="https://wa.me/{{ p.vendedor.telefono }}?text=Hola%20{{ p.vendedor.nombre_tienda }}!%20Me%20interesa%20{% if es_servicio %}presupuestar el servicio{% else %}el producto{% endif %}:%20{{ p.nombre }}" 
                              target="_blank" 
                              class="btn {% if es_servicio %}btn-success{% else %}btn-primary{% endif %} w-100 mt-2 py-2 shadow-sm text-decoration-none d-block text-center fw-bold">
-                             {% if es_servicio %}
-                                Consultar Presupuesto
-                             {% else %}
-                                Comprar Ahora
-                             {% endif %}
+                             {% if es_servicio %}Consultar Presupuesto{% else %}Comprar Ahora{% endif %}
                         </a>
                     </div>
                 </div>
@@ -106,8 +85,11 @@
             {% endfor %}
         </div>
     </div>
+</body>
 
-    <script>
+
+
+<script>
         function changeImage(productId, direction) {
             const img = document.getElementById(`img-${productId}`);
             img.style.opacity = '0.5';
@@ -117,5 +99,8 @@
         }
     </script>
 
-</body>
+
+
 </html>
+
+
